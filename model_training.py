@@ -15,5 +15,5 @@ class model_trainer():
         _model = GridSearchCV(model, parameter_grid, cv=num_folds, return_train_score=False, n_jobs=8)
         _model.fit(self.x, self.y)
 
-        return _model.cv_results_
+        return _model.cv_results_[metrics_of_interest].sort_values('mean_test_score,ascending=False)
 
