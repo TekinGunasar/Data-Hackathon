@@ -2,12 +2,13 @@ import pandas as pd
 from numpy import array
 from nltk import word_tokenize
 from nltk.corpus import stopwords
+from IPython.display import display
 
 class csv():
 
     SENTENCE_INDEX = 'Sentence'
-    STOP_WORDS = stopwords.words('english')
-    PUNKT = ['.',',']
+    STOP_WORDS = (' '.join(stopwords.words('english'))).lower().split(' ')
+    PUNKT = ['.',',','-','(',')']
 
     def __init__(self,csv_file_path):
         self._csv = pd.read_csv(csv_file_path)
@@ -27,8 +28,8 @@ class csv():
         Removes the stop words from an individual sentence in the dataset
     '''
     def remove_stop_words(self,sentence):
-        sentence = word_tokenize(sentence)
-        corrected_sentence = ' '.join(list(filter(lambda word: word not in self.STOP_WORDS and word not in self.PUNKT,
+        sentence = sentence.split(' ')
+        corrected_sentence = ' '.join(list(filter(lambda word: word.lower() not in self.STOP_WORDS and word not in self.PUNKT,
                                                   sentence)))
         return corrected_sentence
 
@@ -41,15 +42,13 @@ class csv():
     def get_proportion_label(self,label,value):
         return sum(array(self._csv[label].values) == value)/len(self._csv[label].values)
 
+csv_file_path = 'advanced_trainset.csv'
+reader = csv(csv_file_path)
 
-if __name__ == 'main':
-    csv_file_path = 'advanced_trainset.csv'
-    reader = csv(csv_file_path)
+label = 'Sentiment'
+value = 'negative'
 
-    label = 'Sentiment'
-    value = 'negative'
-
-    index = 435
-    reader.remove_all_stop_words()
-    example_corrected_sentence = reader.get_individual_entry(index)
-    print(example_corrected_sentence)
+index = 2
+reader.remove_all_stop_words()
+example_sentence = reader.get_individual_entry(index)
+print(example_sentence)
