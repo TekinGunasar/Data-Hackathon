@@ -79,7 +79,13 @@ clf = xgb.XGBClassifier(
 
 trainer = model_trainer(clf,feature_vectors,codified)
 
-# for svc param_grid = {'C':[1,10,100,1000],'gamma':[1,0.1,0.001,0.0001], 'kernel':['linear','rbf']}
+random_forest_param_grid parameter_grid = {
+    'n_estimators':[1,3,5,10,20,30,100,200],
+    'max_depth':[1,3,5,10,15,20]
+}
+
+logisic_regression_param_grid = {"C":np.logspace(-3,3,7), "penalty":["l1","l2"]}
+svc_param_grid = {'C':[1,10,100,1000],'gamma':[1,0.1,0.001,0.0001], 'kernel':['linear','rbf']}
 param_grid = {
     # 'learning_rate': [.001, .05],
     'max_depth': [3, 5, 10, 20],
