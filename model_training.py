@@ -53,7 +53,7 @@ neutral_pos_difference = most_frequent_neutral.difference(most_frequent_positive
 neutral_neg_difference = most_frequent_neutral.difference(most_frequent_negative)
 neutral_encoders = neutral_pos_difference.intersection(neutral_neg_difference)
 
-encoder = n.get_most_frequent(top)
+encoder = [*pos_encoders,neg_encoders,neutral_encoders]
 
 reader.set_word_encoder(encoder)
 feature_vectors = reader.bag_of_words()
